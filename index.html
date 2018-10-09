@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chatbot - Admin</title>
+<title>PTNKChat - Admin</title>
 <style class="cp-pen-styles">@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
 * {
   box-sizing: border-box;
@@ -237,11 +237,10 @@ form button:hover {
 </style></head><body>
 <div class="wrapper">
 	<div class="container">
-		<h1>Chatbot Admin</h1>
+		<h1>PTNKChat Admin</h1>
 		<h1 id="loading" style="display:none; font-size:28px">Please wait...</h1>
 		
 		<form class="form">
-			<input type="text" placeholder="Host" id="host"></input>
 			<input type="password" placeholder="Password" id="pwd"></input>
 			<button type="submit" id="login-button">Login</button>
 		</form>
@@ -279,7 +278,7 @@ $("#login-button").click(function(event){
 			hash: CryptoJS.SHA256(time+""+pwd).toString()
 		}
 		var token = CryptoJS.AES.encrypt(JSON.stringify(a), pwd).toString();
-		var host = $('#host').val().replace(/([\/]|https\:|http\:)/g, "")
+		var host = 'ptnkchat.herokuapp.com';
 		$.ajax({
 			url: 'https://'+host+'/admin/auth',
 			method: 'post',
