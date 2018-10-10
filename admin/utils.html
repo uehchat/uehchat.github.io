@@ -70,6 +70,21 @@ a:hover {cursor:pointer}
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<div class="panel panel-default">
+					<div class="panel-heading">Check info</div>
+					<div class="panel-body">
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+							<div class="form-group">
+								<label>Check info dựa trên ID</label>
+								<textarea class="form-control" placeholder="" id="id"></textarea><br/>
+								<button class="btn btn-primary" onclick="checkInfo()">Check</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="nuiinfo"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-12 col-lg-12">
+				<div class="panel panel-default">
 					<div class="panel-heading">Gửi tin nhắn tới toàn bộ</div>
 					<div class="panel-body">
 						<div class="form-group">
@@ -180,6 +195,27 @@ a:hover {cursor:pointer}
 					}
 				},
 				function () {}
+			);
+		}
+
+		function checkInfo() {
+		var id = $("#id").val();
+			makeRequest(
+				"/admin/userinfo",
+				{token: getAppToken(),id:id},
+				function (data) {
+					data = JSON.parse(data);
+					if (data.error) {
+						$('#nuiinfo').html("<b>id: " + id + '</b><br/>Cannot get user info');
+						return;
+					}
+					$('#nuiinfo').html("<b>id: " + id +  '</b><br/>' + data.last_name + ', ' + data.first_name + '<br/>' +
+						data.locale + ', ' + data.gender + '<br/>' +
+						"<img src=\"" + data.profile_pic + "\" width=\"100px\"/>");
+				},
+				function (xhr, ajaxOptions, thrownError) {
+					$('#nuiinfo').text(thrownError);
+				}
 			);
 		}
 
