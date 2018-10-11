@@ -112,14 +112,14 @@ a:hover {cursor:pointer}
 						return 0;
 					});
 					wr_list_temp.forEach(function(e) {
-						var gender = "ko biết";
+						var gender = "không chọn";
 						if (e.gender == 1) gender = "nữ", women++;
 						else if (e.gender == 2) gender = "nam", men++;
 						else unk++;
 						wr += "<button class=\"btn btn-default\" onclick=\"uinfo(" + e.id + ")\">" +
 							  e.id + " - " + gender + "<br/>" + getDateStr(e.time) + "</button><br/>";
 					});
-					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người, " + men + " nam, " + women + " nữ, " + unk + "không biết):</b><br/>" + wr;
+					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người, " + men + " nam, " + women + " nữ, " + unk + " không chọn):</b><br/>" + wr;
 					$('#nuiwr').html(wr);
 
 					var cr = "<br/><b>PHÒNG CHAT (" + data.chatroom.ids.length + " cặp - " + (data.chatroom.ids.length * 2) + " người):</b><br/>";
