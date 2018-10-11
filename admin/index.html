@@ -119,7 +119,7 @@ a:hover {cursor:pointer}
 						wr += "<button class=\"btn btn-default\" onclick=\"uinfo(" + e.id + ")\">" +
 							  e.id + " - " + gender + "<br/>" + getDateStr(e.time) + "</button><br/>";
 					});
-					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người, " + men + " nam, " + women + " nữ):</b><br/>" + wr;
+					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người, " + men + " nam, " + women + " nữ, " + unk + "không biết):</b><br/>" + wr;
 					$('#nuiwr').html(wr);
 
 					var cr = "<br/><b>PHÒNG CHAT (" + data.chatroom.ids.length + " cặp - " + (data.chatroom.ids.length * 2) + " người):</b><br/>";
