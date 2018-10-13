@@ -275,12 +275,12 @@ $("#login-button").click(function(event){
 		var pwd = CryptoJS.SHA256($('#pwd').val()).toString();
 		var a = {
 			time: time,
-			hash: CryptoJS.SHA256(time+""+pwd).toString()
+			hash: CryptoJS.SHA256(time + "" + pwd).toString()
 		}
 		var token = CryptoJS.AES.encrypt(JSON.stringify(a), pwd).toString();
 		var host = 'ptnkchat.herokuapp.com';
 		$.ajax({
-			url: 'https://'+host+'/admin/auth',
+			url: 'https://' + host + '/admin/auth',
 			method: 'post',
 			data: {
 				token: token

@@ -112,28 +112,36 @@ a:hover {cursor:pointer}
 						return 0;
 					});
 					wr_list_temp.forEach(function(e) {
-						var gender = "không chọn";
+						var gender = "khác";
 						if (e.gender == 1) gender = "nữ", women++;
 						else if (e.gender == 2) gender = "nam", men++;
 						else unk++;
 						wr += "<button class=\"btn btn-default\" onclick=\"uinfo(" + e.id + ")\">" +
 							  e.id + " - " + gender + "<br/>" + getDateStr(e.time) + "</button><br/>";
 					});
-					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người: " + men + " nam, " + women + " nữ, " + unk + " không chọn):</b><br/>" + wr;
+					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người: " + men + " nam, " + women + " nữ, " + unk + " khác):</b><br/>" + wr;
 					$('#nuiwr').html(wr);
 
-					var cr = "<br/><b>PHÒNG CHAT (" + data.chatroom.ids.length + " cặp - " + (data.chatroom.ids.length * 2) + " người):</b><br/>";
+					men = 0, women = 0, unk = 0;
+					var cr = "";
 					data.chatroom.ids.sort(function(a,b) {
 						if (a.starttime > b.starttime) return -1;
 						if (a.starttime < b.starttime) return 1;
 						return 0;
 					});
 					data.chatroom.ids.forEach(function(e,i) {
+						if (e.gender1 == 1) women++;
+						else if (e.gender1 == 2) men++;
+						else unk++;
+						if (e.gender2 == 1) women++;
+						else if (e.gender2 == 2) men++;
+						else unk++;
 						cr += "<a onclick=\"uinfo(" + e.id1 + ")\">" + e.id1 + "</a> - " +
 							  "<a onclick=\"uinfo(" + e.id2 + ")\">" + e.id2 + "</a> - " +
 							  getDateStr(e.starttime) + "<br/>";
 						//console.log(getDateStr(e.starttime))
 					});
+					cr = "<br/><b>PHÒNG CHAT (" + data.chatroom.ids.length + " cặp - " + (data.chatroom.ids.length * 2) + " người: " + men + " nam, " + women + " nữ, " + unk + " khác):</b><br/>" + cr;
 					$('#nuicr').html(cr);
 					$('#nuiheader').html(getDateStr(-1));
 				},
