@@ -181,10 +181,10 @@ a:hover {cursor:pointer}
 			var cf = confirm("Bạn có chắc muốn end chat người này?");
 			if (cf) makeRequest(
 				"/admin/edit/chatroom",
-				{token: getAppToken(),id:id,type:'del'},
+				{token: getAppToken(), id: id, type: 'del'},
 				function (res) {
 					if (res == 'OK') {
-						$('#nuiinfo').html("Ended chat for id "+id);
+						$('#nuiinfo').html("Ended chat for id " + id);
 						fetchData();
 					}
 				},
@@ -199,23 +199,23 @@ a:hover {cursor:pointer}
 			return currentdate.getDate() + "/"
 				+ (currentdate.getMonth() + 1) + "/"
 				+ (currentdate.getFullYear())  + " "
-				+ (currentdate.getHours() < 10 ? "0" : "") + currentdate.getHours()   + ":"
-				+ (currentdate.getMinutes()<10 ? "0" : "") + currentdate.getMinutes() + ":"
-				+ (currentdate.getSeconds()<10 ? "0" : "") + currentdate.getSeconds() + ".";
+				+ (currentdate.getHours()   < 10 ? "0" : "") + currentdate.getHours()   + ":"
+				+ (currentdate.getMinutes() < 10 ? "0" : "") + currentdate.getMinutes() + ":"
+				+ (currentdate.getSeconds() < 10 ? "0" : "") + currentdate.getSeconds();
 		}
 
 		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+			$(document).on("click", "ul.nav li.parent > a > span.icon", function(){
 				$(this).find('em:first').toggleClass("glyphicon-minus");
 			});
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 		}(window.jQuery);
 
 		$(window).on('resize', function () {
-		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+			if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
 		})
 		$(window).on('resize', function () {
-		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
 	</script>
 </body>
