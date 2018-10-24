@@ -166,7 +166,7 @@ a:hover {cursor:pointer}
 						return;
 					}
 					makeRequest("/admin/edit/chatroom",
-						{token: getAppToken(), type:"cradd", id1: data[i].id1, id2: data[i].id2},
+						{token: getAppToken(), type: "cradd", id1: data[i].id1, id2: data[i].id2, gender1: data[i].gender1, gender2: data[i].gender2},
 						function (r) {
 							done++;
 							$("#restore_status").html("Đã hoàn thành: "+done+"/"+data.length);
