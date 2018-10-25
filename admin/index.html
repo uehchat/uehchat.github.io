@@ -63,11 +63,11 @@ a:hover {cursor:pointer}
 			</div>
 			<div class="col-md-12">
 				<div class="panel panel-success"> <!-- panel-default -->
-					<div class="panel-heading" id="nuiheader"></div>
+					<div class="panel-heading" id="ptnkheader"></div>
 					<div class="panel-body">
-						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="nuiwr"></div>
-						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="nuiinfo"></div>
-						<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="nuicr"></div>
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="ptnkwr"></div>
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="ptnkinfo"></div>
+						<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="ptnkcr"></div>
 					</div>
 				</div>
 			</div>
@@ -120,7 +120,7 @@ a:hover {cursor:pointer}
 							  e.id + " - " + gender + "<br/>" + getDateStr(e.time) + "</button><br/>";
 					});
 					wr = data.pstat + "<br/><b>PHÒNG CHỜ (" + data.waitroom.ids.length + " người: " + men + " nam, " + women + " nữ, " + unk + " khác):</b><br/>" + wr;
-					$('#nuiwr').html(wr);
+					$('#ptnkwr').html(wr);
 
 					men = 0, women = 0, unk = 0;
 					var cr = "";
@@ -142,8 +142,8 @@ a:hover {cursor:pointer}
 						//console.log(getDateStr(e.starttime))
 					});
 					cr = "<br/><b>PHÒNG CHAT (" + data.chatroom.ids.length + " cặp - " + (data.chatroom.ids.length * 2) + " người: " + men + " nam, " + women + " nữ, " + unk + " khác):</b><br/>" + cr;
-					$('#nuicr').html(cr);
-					$('#nuiheader').html(getDateStr(-1));
+					$('#ptnkcr').html(cr);
+					$('#ptnkheader').html(getDateStr(-1));
 				},
 				function (xhr, ajaxOptions, thrownError) {
 					alert("Có lỗi xảy ra, xin hãy thử lại\n" + thrownError);
@@ -162,17 +162,17 @@ a:hover {cursor:pointer}
 				function (data) {
 					data = JSON.parse(data);
 					if (data.error) {
-						$('#nuiinfo').html("<b>id: " + id + '</b><br/>Cannot get user info<br/>'+
+						$('#ptnkinfo').html("<b>ID: " + id + '</b><br/>Couldn\'t get user info<br/>'+
 							"<button class=\"btn btn-danger\" onclick=\"removeUsr(" + id + ")\">End chat</button>");
 						return;
 					}
-					$('#nuiinfo').html("<b>id: " + id +  '</b><br/>' + data.name + '<br/>' +
+					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/><i>' + data.name + '</i><br/>' +
 						data.locale + ', ' + data.gender + '<br/>' +
 						"<img src=\"" + data.profile_pic + "\" width=\"100px\"/><br/>" +
 						"<button class=\"btn btn-danger\" onclick=\"removeUsr(" + id + ")\">End chat</button>");
 				},
 				function (xhr, ajaxOptions, thrownError) {
-					$('#nuiinfo').text(thrownError);
+					$('#ptnkinfo').text(thrownError);
 				}
 			);
 		}
@@ -184,7 +184,7 @@ a:hover {cursor:pointer}
 				{token: getAppToken(), id: id, type: 'del'},
 				function (res) {
 					if (res == 'OK') {
-						$('#nuiinfo').html("Ended chat for id " + id);
+						$('#ptnkinfo').html("Ended chat for ID " + id);
 						fetchData();
 					}
 				},
@@ -205,7 +205,7 @@ a:hover {cursor:pointer}
 		}
 
 		!function ($) {
-			$(document).on("click", "ul.nav li.parent > a > span.icon", function(){
+			$(document).on("click", "ul.nav li.parent > a > span.icon", function() {
 				$(this).find('em:first').toggleClass("glyphicon-minus");
 			});
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");

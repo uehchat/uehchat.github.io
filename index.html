@@ -292,12 +292,15 @@ $("#login-button").click(function(event){
 					window.location.href = "admin/";
 				} else if (res == "ERR_AUTH") {
 					alert("Sai mật khẩu!");
+					redirectToLogin();
 				} else {
 					alert("Có lỗi xảy ra!");
+					redirectToLogin();
 				}
 			},
 			error: function() {
 				alert("Lỗi kết nối!");
+				redirectToLogin();
 			}
 		})
 	}, 500)

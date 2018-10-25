@@ -14,7 +14,7 @@ function redirectToLogin() {
 }
 
 function setAppToken(token) {
-	createCookie("token",token,1);
+	createCookie("token", token, 1);
 }
 
 function getAppToken() {
@@ -22,18 +22,18 @@ function getAppToken() {
 }
 
 function setAppUrl(url) {
-	createCookie("url",url,365);
+	createCookie("url", url, 365);
 }
 
 function getAppUrl() {
-	return "https://"+readCookie("url");
+	return "https://" + readCookie("url");
 }
 
-function createCookie(name,value,days) {
+function createCookie(name, value, days) {
     var expires = "";
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
     document.cookie = name + "=" + value + expires + "; path=/";
@@ -51,12 +51,12 @@ function readCookie(name) {
 }
 
 function eraseCookie(name) {
-    createCookie(name,"",-1);
+    createCookie(name, "", -1);
 }
 
 function makeRequest(endpoint, data, success, error) {
 	$.ajax({
-		url: getAppUrl()+endpoint,
+		url: getAppUrl() + endpoint,
 		data: data,
 		type: "POST",
 		timeout: 5000,

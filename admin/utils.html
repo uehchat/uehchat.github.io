@@ -79,7 +79,7 @@ a:hover {cursor:pointer}
 								<button class="btn btn-primary" onclick="checkInfo()">Check</button>
 							</div>
 						</div>
-						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="nuiinfo"></div>
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="ptnkinfo"></div>
 					</div>
 				</div>
 			</div>
@@ -89,7 +89,7 @@ a:hover {cursor:pointer}
 					<div class="panel-body">
 						<div class="form-group">
 							<label>Gửi tin nhắn của bạn tới toàn bộ người dùng (Giới hạn: 630 ký tự)</label>
-							<textarea class="form-control" placeholder="" id="annonce">[BOT] </textarea>
+							<textarea class="form-control" placeholder="" id="announce">[BOT] </textarea>
 						</div>
 						<b>Lưu ý:</b> Admin sẽ không nhìn thấy tin nhắn này từ trang quản lý page. Tính năng này chỉ chạy trên bản 4.0 trở lên<br/><br/>
 						<button class="btn btn-primary" onclick="sendBroadcast()">Gửi ngay</button>
@@ -169,7 +169,7 @@ a:hover {cursor:pointer}
 						{token: getAppToken(), type: "cradd", id1: data[i].id1, id2: data[i].id2, gender1: data[i].gender1, gender2: data[i].gender2},
 						function (r) {
 							done++;
-							$("#restore_status").html("Đã hoàn thành: "+done+"/"+data.length);
+							$("#restore_status").html("Đã hoàn thành: " + done + "/" + data.length);
 							if (done == data.length) alert("Đã khôi phục xong!");
 						},function () {});
 					i++;
@@ -202,19 +202,19 @@ a:hover {cursor:pointer}
 		var id = $("#id").val();
 			makeRequest(
 				"/admin/userinfo",
-				{token: getAppToken(),id:id},
+				{token: getAppToken(), id: id},
 				function (data) {
 					data = JSON.parse(data);
 					if (data.error) {
-						$('#nuiinfo').html("<b>id: " + id + '</b><br/>Cannot get user info');
+						$('#ptnkinfo').html("<b>ID: " + id + '</b><br/>Couldn\'t get user info');
 						return;
 					}
-					$('#nuiinfo').html("<b>id: " + id +  '</b><br/>' + data.last_name + ', ' + data.first_name + '<br/>' +
+					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/><i>' + data.name + '</i><br/>' +
 						data.locale + ', ' + data.gender + '<br/>' +
 						"<img src=\"" + data.profile_pic + "\" width=\"100px\"/>");
 				},
 				function (xhr, ajaxOptions, thrownError) {
-					$('#nuiinfo').text(thrownError);
+					$('#ptnkinfo').text(thrownError);
 				}
 			);
 		}
@@ -223,7 +223,7 @@ a:hover {cursor:pointer}
 			var cf = confirm("Bạn có chắc muốn gửi?");
 			if (cf) makeRequest(
 				"/admin/send/broadcast/",
-				{token: getAppToken(),text:$("#annonce").val()},
+				{token: getAppToken(), text: $("#announce").val()},
 				function (res) {
 					if (res == 'OK') {
 						alert("Đã gửi thành công!");
@@ -240,19 +240,19 @@ a:hover {cursor:pointer}
 			if (time == -1) currentdate = new Date();
 			else currentdate = new Date(time);
 			return currentdate.getDate() + "/"
-				+ (currentdate.getMonth()+1)  + "/"
-				+ currentdate.getFullYear() + " "
-				+ (currentdate.getHours()<10? "0":"") + currentdate.getHours() + ":"
-				+ (currentdate.getMinutes()<10? "0":"") + currentdate.getMinutes() + ":"
-				+ (currentdate.getSeconds()<10? "0":"") + currentdate.getSeconds() + ".";
+				+ (currentdate.getMonth() + 1) + "/"
+				+ (currentdate.getFullYear())  + " "
+				+ (currentdate.getHours()   < 10 ? "0" : "") + currentdate.getHours()   + ":"
+				+ (currentdate.getMinutes() < 10 ? "0" : "") + currentdate.getMinutes() + ":"
+				+ (currentdate.getSeconds() < 10 ? "0" : "") + currentdate.getSeconds();
 		}
 
 		function getFileName() {
-			return "chatbot_backup_"+getDateStr(-1).replace(/\//g,'-').replace(/\:/g,'-').replace(/\s+/,'_')+"ncb";
+			return "chatbot_backup_" + getDateStr(-1).replace(/\//g,'-').replace(/\:/g,'-').replace(/\s+/,'_') + ".ptnk";
 		}
 
 		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+			$(document).on("click", "ul.nav li.parent > a > span.icon", function() {
 				$(this).find('em:first').toggleClass("glyphicon-minus");
 			});
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
