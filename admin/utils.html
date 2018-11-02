@@ -85,7 +85,7 @@ a:hover {cursor:pointer}
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Gửi tin nhắn tới toàn bộ</div>
+					<div class="panel-heading">Gửi tin nhắn tới toàn bộ người dùng</div>
 					<div class="panel-body">
 						<div class="form-group">
 							<label>Gửi tin nhắn của bạn tới toàn bộ người dùng (Giới hạn: 630 ký tự)</label>
@@ -102,6 +102,15 @@ a:hover {cursor:pointer}
 					<div class="panel-body">
 						Tính năng này chạy được trên tất cả các phiên bản.<br/>Tạo 1 bản sao lưu trạng thái ghép cặp của các cuộc trò chuyện:<br/><br/>
 						<button class="btn btn-primary" onclick="getBackupFile()" id="backup_btn">Tải bản sao lưu</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-6 col-lg-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">Xoá dữ liệu</div>
+					<div class="panel-body">
+						<b>Lưu ý:</b> Tính năng này chỉ chạy trên phiên bản 4.1.3 trở lên.<br/>Xoá toàn bộ cơ sở dữ liệu<br/><br/>
+						<button class="btn btn-primary" onclick="resetDatabase()" id="resetDb_btn">Xoá dữ liệu</button>
 					</div>
 				</div>
 			</div>
@@ -133,9 +142,10 @@ a:hover {cursor:pointer}
 		makeRequest("/admin/version", {},
 			function (r) {
 				$("#version").text(r);
-			},function () {
+			}, function () {
 				$("#version").text("Cũ hơn 4.0 (bạn nên nâng cấp lên bản 4.0!)");
-			});
+			}
+		);
 
 		function readBackup(e) {
 			var file = e.target.files[0];
@@ -158,8 +168,8 @@ a:hover {cursor:pointer}
 			try {
 				data = JSON.parse(data);
 				data = data.chatroom.ids;
-				var i=0;
-				var done=0;
+				var i = 0;
+				var done = 0;
 				function doAdd() {
 					if (i >= data.length) {
 						clearInterval(refreshIntervalId);
@@ -171,7 +181,7 @@ a:hover {cursor:pointer}
 							done++;
 							$("#restore_status").html("Đã hoàn thành: " + done + "/" + data.length);
 							if (done == data.length) alert("Đã khôi phục xong!");
-						},function () {});
+						}, function () {});
 					i++;
 				}
 				var refreshIntervalId = setInterval(doAdd, 200);
@@ -193,9 +203,29 @@ a:hover {cursor:pointer}
 						download(getFileName(), data);
 						$("#backup_btn").html("Tải bản sao lưu");
 					}
-				},
-				function () {}
+				}, function () {}
 			);
+		}
+
+		function resetDatabase() {
+			var cf = confirm("Bạn có chắc chắn muốn xoá? Dữ liệu đã xoá không thể phục hồi!");
+			if (cf) {
+				$("#resetDb_btn").html("Xin chờ...");
+				makeRequest(
+					"/admin/db/reset",
+					{token: getAppToken()},
+					function (res) {
+						if (res == "ERR_AUTH") {
+							redirectToLogin();
+							return;
+						} else if (res == 'OK') {
+							alert("Đã xoá thành công!");
+						} else {
+							alert(res);
+						}
+					}, function () {}
+				);
+			}
 		}
 
 		function checkInfo() {
@@ -204,6 +234,10 @@ a:hover {cursor:pointer}
 				"/admin/userinfo",
 				{token: getAppToken(), id: id},
 				function (data) {
+					if (data == "ERR_AUTH") {
+						redirectToLogin();
+						return;
+					}
 					data = JSON.parse(data);
 					if (data.error) {
 						$('#ptnkinfo').html("<b>ID: " + id + '</b><br/>Couldn\'t get user info');
@@ -212,26 +246,27 @@ a:hover {cursor:pointer}
 					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/><i>' + data.name + '</i><br/>' +
 						data.locale + ', ' + data.gender + '<br/>' +
 						"<img src=\"" + data.profile_pic + "\" width=\"100px\"/>");
-				},
-				function (xhr, ajaxOptions, thrownError) {
+				}, function (xhr, ajaxOptions, thrownError) {
 					$('#ptnkinfo').text(thrownError);
 				}
 			);
 		}
 
 		function sendBroadcast() {
-			var cf = confirm("Bạn có chắc muốn gửi?");
+			var cf = confirm("Bạn có chắc chắn muốn gửi?");
 			if (cf) makeRequest(
 				"/admin/send/broadcast/",
 				{token: getAppToken(), text: $("#announce").val()},
 				function (res) {
-					if (res == 'OK') {
+					if (res == "ERR_AUTH") {
+						redirectToLogin();
+						return;
+					} else if (res == 'OK') {
 						alert("Đã gửi thành công!");
 					} else {
 						alert(res);
 					}
-				},
-				function () {}
+				}, function () {}
 			);
 		}
 
@@ -265,27 +300,28 @@ a:hover {cursor:pointer}
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
 
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
+		function download(filename, text) {
+			var element = document.createElement('a');
+			element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+			element.setAttribute('download', filename);
 
-  element.style.display = 'none';
-  document.body.appendChild(element);
+			element.style.display = 'none';
+			document.body.appendChild(element);
 
-  element.click();
+			element.click();
 
-  document.body.removeChild(element);
-}
-
-makeRequest("/admin/read",
-	{token: getAppToken()},
-	function (data) {
-		if (data == "ERR_AUTH") {
-			redirectToLogin();
-			return;
+			document.body.removeChild(element);
 		}
-	});
+
+		makeRequest("/admin/read",
+			{token: getAppToken()},
+			function (data) {
+				if (data == "ERR_AUTH") {
+					redirectToLogin();
+					return;
+				}
+			}, function () {}
+		);
 	</script>
 </body>
 
