@@ -97,31 +97,31 @@ a:hover {cursor:pointer}
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-6 col-lg-6">
-				<div class="panel panel-default">
+				<div class="panel panel-default"  style="height: 220px;">
 					<div class="panel-heading">Sao lưu</div>
 					<div class="panel-body">
-						Tính năng này chạy được trên tất cả các phiên bản.<br/>Tạo 1 bản sao lưu trạng thái ghép cặp của các cuộc trò chuyện:<br/><br/>
+						Tính năng này chạy được trên tất cả các phiên bản.<br/>Tạo 1 bản sao lưu trạng thái ghép cặp của các cuộc trò chuyện.<br/><br/><br/>
 						<button class="btn btn-primary" onclick="getBackupFile()" id="backup_btn">Tải bản sao lưu</button>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-6 col-lg-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">Xoá dữ liệu</div>
+				<div class="panel panel-default" style="height: 220px;">
+					<div class="panel-heading">Khôi phục</div>
 					<div class="panel-body">
-						<b>Lưu ý:</b> Tính năng này chỉ chạy trên phiên bản 4.1.2 trở lên.<br/>Xoá toàn bộ cơ sở dữ liệu<br/><br/>
-						<button class="btn btn-primary" onclick="resetDatabase()" id="resetDb_btn">Xoá dữ liệu</button>
+						<b>Lưu ý:</b> Tính năng này chỉ chạy trên bản 4.0 trở lên.<br/>Khôi phục trạng thái ghép cặp của các cuộc trò chuyện.<br/><br/>
+						Chọn file:<br/>
+						<input type="file" id="fileToLoad" onclick="loadBackupFile()"><br/>
+						<b id="restore_status"></b>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-6 col-lg-6">
 				<div class="panel panel-default">
-					<div class="panel-heading">Khôi phục</div>
+					<div class="panel-heading" style="color:Red;">Xoá dữ liệu</div>
 					<div class="panel-body">
-						Chọn file:<br/>
-						<input type="file" id="fileToLoad" onclick="loadBackupFile()"><br/>
-						<b>Lưu ý:</b> Tính năng này chỉ chạy trên bản 4.0 trở lên
-						<b id="restore_status"></b>
+						<b>Lưu ý:</b> Tính năng này chỉ chạy trên phiên bản 4.1.2 trở lên.<br/><br/>
+						<button class="btn btn-primary" onclick="resetDatabase()" id="resetDb_btn">Xoá dữ liệu</button>
 					</div>
 				</div>
 			</div>
