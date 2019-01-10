@@ -243,8 +243,8 @@ a:hover {cursor:pointer}
 						$('#ptnkinfo').html("<b>ID: " + id + '</b><br/>Couldn\'t get user info');
 						return;
 					}
-					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/>' + data.name + '<br/>' +
-						'<i>' + (data.gender == 'male' ? "Nam" : "Nữ") + '</i><br/>' +
+					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/>' + data.name +
+						'  (<i>' + (data.gender == 'male' ? "Nam" : "Nữ") + '</i>)<br/>' +
 						"<img src=\"" + data.profile_pic + "\" width=\"100px\"/>");
 				}, function (xhr, ajaxOptions, thrownError) {
 					$('#ptnkinfo').text(thrownError);
