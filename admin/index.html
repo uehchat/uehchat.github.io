@@ -166,8 +166,8 @@ a:hover {cursor:pointer}
 							"<button class=\"btn btn-danger\" onclick=\"removeUsr(" + id + ")\">End chat</button>");
 						return;
 					}
-					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/><i>' + data.name + '</i><br/>' +
-						data.locale + ', ' + data.gender + '<br/>' +
+					$('#ptnkinfo').html("<b>ID: " + id +  '</b><br/>' + data.name + '<br/>' +
+						'<i>' + (data.gender == 'male' ? "Nam" : "Nữ") + '</i><br/>' +
 						"<img src=\"" + data.profile_pic + "\" width=\"100px\"/><br/>" +
 						"<button class=\"btn btn-danger\" onclick=\"removeUsr(" + id + ")\">End chat</button>");
 				},
