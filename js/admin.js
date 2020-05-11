@@ -166,11 +166,14 @@ function uinfo(id) {
         if (data.errortype === 'auth') {
           redirectToLogin();
         } else {
-          $('#ptnkinfo').html(`<b>ID: ${id}</b><br>Couldn't get user info<br>
+          $('#ptnkinfo').html(`<b>ID: ${id}</b><br>Couldn't get info for user ${id}<br>
                               <button class="btn btn-danger" onclick="removeUsr(${id})">End chat</button>`);
         }
         return;
       }
+
+      data = data.userProfile;
+
       $('#ptnkinfo').html(`<b>ID: ${id}</b><br>${data.name} (<i>${data.gender == 'male' ? 'Nam' : 'Nữ'}</i>)<br>
           <img src="${data.profile_pic}" width="100px"/><br>
           <button class="btn btn-danger" onclick="removeUsr(${id})">End chat</button>`);
