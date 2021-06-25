@@ -1,6 +1,5 @@
 // CHANGE THIS
-var host = 'https://ptnkchat.herokuapp.com';
-//var host = 'http://localhost:5000';
+var host = 'https://lebaohiep.com/ptnkchat';
 setAppUrl(host);
 
 if (getAppToken() !== null) {
