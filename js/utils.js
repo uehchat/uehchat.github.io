@@ -134,7 +134,7 @@ function checkInfo() {
 
       data = data.userProfile;
 
-      $('#uehinfo').html(`<b>ID: ${id}</><br>${data.name} (<i>${data.gender == 'male' ? 'Nam' : 'Nữ'}</i>)<br>
+      $('#uehinfo').html(`<b>ID: ${id}</><br>${data.name}</i><br>
                           <img src="${data.profile_pic}" width="100px"/><br>`);
     },
     function (xhr, ajaxOptions, thrownError) {

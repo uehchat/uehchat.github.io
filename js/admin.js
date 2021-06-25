@@ -36,9 +36,6 @@ function fetchChatRoom() {
       }
 
       if (cr_data.success === true) {
-        var men = 0;
-        var women = 0;
-        var unk = 0;
         var cr = '';
 
         cr_data = cr_data.chatRoom;
@@ -49,22 +46,13 @@ function fetchChatRoom() {
         });
 
         cr_data.forEach(function (e) {
-          if (e.gender1 === 'FEMALE') women++;
-          else if (e.gender1 === 'MALE') men++;
-          else unk++;
-
-          if (e.gender2 === 'FEMALE') women++;
-          else if (e.gender2 === 'MALE') men++;
-          else unk++;
-
           var time = moment(e.time).format('llll');
 
           cr += `<a onclick="uinfo(${e.id1})">${e.id1}</a> -
                 <a onclick="uinfo(${e.id2})">${e.id2}</a> - ${time}<br>`;
         });
 
-        cr = `<br><b>PHÒNG CHAT (${cr_data.length} cặp - ${cr_data.length * 2} người:
-              ${men} nam, ${women} nữ, ${unk} khác):</b><br>${cr}`;
+        cr = `<br><b>PHÒNG CHAT (${cr_data.length} cặp - ${cr_data.length * 2} người):</b><br>${cr}`;
         $('#uehcr').html(cr);
       } else {
         $('#uehcr').html('<b>Could not get chatroom: Unknown error</b>');
@@ -86,9 +74,6 @@ function fetchWaitRoom() {
       }
 
       if (wr_data.success === true) {
-        var men = 0;
-        var women = 0;
-        var unk = 0;
         var wr = '';
 
         wr_data = wr_data.waitRoom;
@@ -99,25 +84,13 @@ function fetchWaitRoom() {
         });
 
         wr_data.forEach(function (e) {
-          var gender;
-          if (e.gender === 'FEMALE') {
-            gender = 'nữ';
-            women++;
-          } else if (e.gender === 'MALE') {
-            gender = 'nam';
-            men++;
-          } else {
-            gender = 'khác';
-            unk++;
-          }
-
           var time = moment(e.time).format('llll');
 
           wr += `<button class="btn btn-default" onclick="uinfo(${e.id})">
-                ${e.id} - ${gender}<br>${time}</button><br>`;
+                ${e.id}<br>${time}</button><br>`;
         });
 
-        wr = `<br><b>PHÒNG CHỜ (${wr_data.length} người: ${men} nam, ${women} nữ, ${unk} khác):</b><br>${wr}`;
+        wr = `<br><b>PHÒNG CHỜ (${wr_data.length} người):</b><br>${wr}`;
         $('#uehwr').html(wr);
       } else {
         $('#uehstats').html('<b>Could not get waitroom: Unknown error</b>');
@@ -174,7 +147,7 @@ function uinfo(id) {
 
       data = data.userProfile;
 
-      $('#uehinfo').html(`<b>ID: ${id}</b><br>${data.name} (<i>${data.gender == 'male' ? 'Nam' : 'Nữ'}</i>)<br>
+      $('#uehinfo').html(`<b>ID: ${id}</b><br>${data.name}<br>
           <img src="${data.profile_pic}" width="100px"/><br>
           <button class="btn btn-danger" onclick="removeUsr(${id})">End chat</button>`);
     },
